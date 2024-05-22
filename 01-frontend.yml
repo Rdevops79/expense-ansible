@@ -6,3 +6,39 @@
      ansible.builtin.dnf:
       name: nginx
       state: present
+
+   - name: copy expense config file
+     ansible.builtin.copy:
+       src: expense.conf
+       dest: /etc/nginx/default.d/expense.conf
+
+   - name: Recursively remove directory # removed the old html directory
+     ansible.builtin.file:
+       path: /usr/share/nginx/html
+       state: absent
+
+   - name: Create a directory if it does not exist # creating the html diecstory
+     ansible.builtin.file:
+       path: /usr/share/nginx/html
+       state: directory
+
+             # - name: Download frontend content  # downlading the front end file
+            #ansible.builtin.get_url:
+            # url: https://expense-artifacts.s3.amazonaws.com/expense-frontend-v2.zip
+              #dest: /tmp/frontend.zip
+            # (->this above setps are for executation of the downloding the front end content)
+            #(->but we have to unzip the file so by using the below one we can do both)
+   - name: Unarchive a file that needs to be downloaded (added in 2.0)
+     ansible.builtin.unarchive:
+       src: https://expense-artifacts.s3.amazonaws.com/expense-frontend-v2.zip
+       dest: /usr/share/nginx/html
+       remote_src: true
+
+   - name: start nginx service
+     ansible.builtin.systemd_service:
+       state: restarted
+       name: nginx
+       enabled: true
+
+
+
