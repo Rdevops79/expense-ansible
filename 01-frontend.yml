@@ -2,6 +2,8 @@
   hosts: all
   become: true
   tasks:
+   - name: set prompt
+     ansible.builtin.shell: set-prompt frontend
    - name: install nginx
      ansible.builtin.dnf:
       name: nginx
