@@ -1,0 +1,48 @@
+#source common.sh
+#rm -f /tmp/expense.log
+
+#if [ -z "$1" ]; then
+#echo "INput MySQL Password is Missing"
+#exit 1    ## here by using the exit script we stop the exection part because if any mistake is there the it should stop
+#fi
+
+#HEADING Installing MySQL Server
+#dnf install mysql-server -y &>>/tmp/expense.log
+#STAT $?
+
+#HEADING Start MySQL Server
+#systemctl enable mysqld &>>/tmp/expense.log
+#systemctl start mysqld &>>/tmp/expense.log
+#STAT $?
+
+#HEADING Set Root Password
+#mysql_secure_installation --set-root-pass $1 &>>/tmp/expense.log
+  ## PA
+#STAT $?
+- name: frontend playbook
+  hosts: all
+  become: true
+  tasks:
+    - name: set prompt
+      ansible.builtin .shell: set-prompt mysql
+
+    - name: installing mysql server
+      ansible.builtin.dnf:
+        name: mysql server
+        state: present
+
+    - name: starting mysql service
+      ansible.builtin.systemd_service:
+       name: mysql server
+       state: restarted
+       enable: true
+
+    - name: set root password
+      ansible.builtin.shell: mysql_secure_installation --set-root-pass ExpenseApp@1
+
+
+
+
+
+
+
