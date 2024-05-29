@@ -24,7 +24,7 @@
   become: true
   tasks:
     - name: set prompt
-      ansible.builtin .shell: set-prompt mysql
+      ansible.builtin.shell: set-prompt mysql
 
     - name: installing mysql server
       ansible.builtin.dnf:
