@@ -60,7 +60,7 @@
         local_host: 172.31.41.63
 
     - name: Start Backend Service
-      ansibel.builtin.systemd_service:
+      ansible.builtin.systemd_service:
         name: backend
         state: restarted
         enable: true
