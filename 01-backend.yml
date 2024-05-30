@@ -59,7 +59,7 @@
         target: /app/schema/backend.sql
         login_user: root
         login_password: ExpenseApp@1
-        local_host: 172.31.41.63
+        login_host: 172.31.41.63
 
     - name: Start Backend Service
       ansible.builtin.systemd_service:
@@ -67,6 +67,8 @@
         state: restarted
         enable: true
         demon_reload: true
+
+    -
 
 
 
