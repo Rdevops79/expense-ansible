@@ -28,12 +28,12 @@
 
     - name: installing mysql server
       ansible.builtin.dnf:
-        name: mysql server
+        name: mysql-server
         state: present
 
     - name: starting mysql service
       ansible.builtin.systemd_service:
-       name: mysql server
+       name: mysqld
        state: restarted
        enable: true
 
